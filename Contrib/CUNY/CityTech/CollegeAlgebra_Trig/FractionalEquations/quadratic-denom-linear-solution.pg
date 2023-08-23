@@ -39,15 +39,18 @@ Context("Numeric")->flags->set(reduceConstants=>0, reduceConstantFunctions=>0);
 Context()->variables->are("y"=>Real);
 Context()->noreduce('(-x)-y','(-x)+y');
 
-$A = random(2,8,1);
-$B = random(2,9,1);
-$R1 = random(-1,1,2)*random(2,7,1);
-do { $R2 = random(-1,1,2)*random(2,7,1); } until ( abs($R1) != abs($R2) );
+do {
+    $A = random(2,8,1);
+    $B = random(2,9,1);
+    $R1 = random(-1,1,2)*random(2,7,1);
+    do { $R2 = random(-1,1,2)*random(2,7,1); } until ( abs($R1) != abs($R2) );
 
-$A1 = $A + 1;
-$AR1 = $A*$R1;
-$AB = $A*$B;
-$A1R2 = $A1*$R2;
+    $A1 = $A + 1;
+    $AR1 = $A*$R1;
+    $AB = $A*$B;
+    $A1R2 = $A1*$R2;
+} until ($AB-$AR1+$A1R2 != $R1 && $AB-$AR1+$A1R2 != $R2);
+
 $Qb = $R1+$R2;
 $Qc = $R1*$R2;
 

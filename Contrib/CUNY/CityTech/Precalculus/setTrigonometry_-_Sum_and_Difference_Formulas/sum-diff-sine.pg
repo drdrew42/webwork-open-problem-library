@@ -315,6 +315,19 @@ BEGIN_PGML_SOLUTION
 
 END_PGML_SOLUTION
 
-
+### Disable trig functions and update feedback messages
+Context()->functions->disable('Trig');
+Context()->{error}{msg}{"Function 'sin' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
+Context()->{error}{msg}{"Function 'cos' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
+Context()->{error}{msg}{"Function 'tan' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
+Context()->{error}{msg}{"Function 'sec' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
+Context()->{error}{msg}{"Function 'csc' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
+Context()->{error}{msg}{"Function 'cot' is not allowed in this context"} 
+  = "Your answer is not allowed to contain any trig functions.$BR Please compute the result and resubmit.";
 
 ENDDOCUMENT();        
