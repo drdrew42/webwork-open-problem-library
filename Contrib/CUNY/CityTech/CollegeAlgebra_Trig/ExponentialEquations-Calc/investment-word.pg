@@ -40,7 +40,7 @@ $double = 2*$init;
 $percent = random(3,12,1);
 $rate = $percent/100;
 
-$time = Real("log(2)/$rate");
+$time = Real("ln(2)/$rate");
 
 Context("LimitedNumeric");
 $time = Real("$time")->with(tolType=>'absolute',tolerance=>0.005);

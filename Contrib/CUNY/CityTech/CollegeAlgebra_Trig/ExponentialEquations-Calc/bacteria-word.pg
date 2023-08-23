@@ -42,7 +42,7 @@ $At = Formula("$init*e^($rate t)");
 $mins = random(5,25,5);
 $Amins = $At->eval(t=>$mins);
 $Amins = round($Amins);
-$time = Real("log(2)/$rate")->with(tolType=>'absolute',tolerance=>0.0005);
+$time = Real("ln(2)/$rate")->with(tolType=>'absolute',tolerance=>0.0005);
 
 Context("LimitedNumeric");
 Context()->flags->set(tolType=>'absolute', tolerance=>0.5);

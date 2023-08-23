@@ -37,6 +37,7 @@ $showPartialCorrectAnswers = 1;
 #
 
 Context("Numeric");
+Context()->noreduce('(-x)+y', '(-x)-y');
 
 $M = random(-1,1,2)*random(2,6,1);
 

@@ -63,6 +63,9 @@ END_PGML
 #
 
 BEGIN_PGML_HINT
+
+When [`f`] is an odd function and [`0`] is in the domain, then what is [`f(0)`]?
+
 END_PGML_HINT
 
 BEGIN_PGML_SOLUTION
