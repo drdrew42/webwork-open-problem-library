@@ -1,0 +1,81 @@
+##DESCRIPTION
+##  Algebra: polynomials 
+##ENDDESCRIPTION
+
+
+## DBsubject(Algebra)
+## DBchapter(Operations on polynomial and rational expressions)
+## DBsection(Polynomials: add, subtract)
+## Date(9/11/2009)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## Level(2)
+## MO(1)
+## TitleText1('Algebra for College Students')
+## AuthorText1('Kaufmann, Schwitters')
+## EditionText1('8')
+## Section1('3.1')
+## Problem1('68')
+## KEYWORDS('algebra', 'polynomials')
+
+########################################################################
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "contextLimitedPolynomial.pl",
+  "PGcourse.pl"
+);
+
+########################################################################
+
+TEXT(beginproblem());
+
+########################################################################
+
+Context("Numeric");
+Context()->variables->add(y =>'Real');
+
+$a = random(2,10,1);
+$b = random(2,15,1);
+$c = random(2,10,1);
+$d = random(2,15,1);
+$e = random(2,15,1);
+$f = random(2,15,1);
+
+$a1 = Compute("-$b-$d");
+$a2 = Compute("$a");
+$a3 = Compute("1+$c-$e");
+
+Context("LimitedPolynomial-Strict");
+Context()->variables->add(y =>'Real');
+
+$ans = Compute("$a1 x + $a2 xy + $a3 y");
+Context("Numeric");
+
+
+$ans2 = Real($a1*(-1) + $a2 *(-2) + $a3 *(2));
+
+##############################################################
+
+Context()->texStrings;
+BEGIN_TEXT
+Simplify by first writing an equivalent expression with no parentheses and then collecting like terms.
+\[
+[$a xy - ($b x + xy - y)] + [$c y -($d x - xy + $e y)]
+\]
+Answer: \{ans_rule(30) \}
+The value of the given polynomial when \(x=-1\) and \(y=2\) is \{ans_rule(10)\}.
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+
+ANS($ans->cmp);
+Context()->operators->undefine("+","-","*","/","**","^");
+Context()->functions->disable("All");
+ANS($ans2->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
