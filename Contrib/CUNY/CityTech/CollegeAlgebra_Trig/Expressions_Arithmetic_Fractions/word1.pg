@@ -1,0 +1,66 @@
+#DESCRIPTION
+##Type of
+#ENDDESCRIPTION
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+ "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->texStrings;
+
+$quarterMI=Real(1320);
+$laps = list_random(2,3,5,6);
+$dist = Real($laps*$quarterMI);
+
+BEGIN_TEXT
+$PAR
+OPTIONAL
+$PAR
+Courtney walks $laps laps around a \(\frac{1}{4}\)-mile track.$BR
+[1 mile is 5280 feet].$BR
+How long is one lap? \{ans_rule(5)\} feet.
+$BR
+How far did Courtney walk all together? \{ ans_rule(5) \} feet.
+END_TEXT
+Context()->normalStrings;
+
+Context()->operators->undefine("+"," +","+ ");
+Context()->operators->undefine("-"," -","- ");
+Context()->operators->undefine("*"," *","* ");
+Context()->operators->undefine("/"," /","/ ");
+Context()->operators->undefine("^"," ^","^ ","**"," **","** ");
+Context()->functions->disable("All");
+
+Context()->{error}{msg}{"Can't use '+' in this context"} 
+  = "Addition is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '-' in this context"} 
+  = "Subtraction is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '*' in this context"} 
+  = "Multiplication is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '/' in this context"} 
+  = "Division is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '^' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '**' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+
+
+ANS($quarterMI->cmp());
+ANS($dist->cmp());
+BEGIN_SOLUTION
+$PAR Solution $PAR
+A quarter mile is \(\frac{1}{4}\times 5280 = 1320\) ft. $BR
+So $laps laps is \( $laps \times 1320 = $dist ft\).
+END_SOLUTION
+
+COMMENT('MathObject version');
+ENDDOCUMENT();
+## DBsubject(Arithmetic)
+## DBchapter(Fractions/rational numbers)
+## DBsection(Applications)

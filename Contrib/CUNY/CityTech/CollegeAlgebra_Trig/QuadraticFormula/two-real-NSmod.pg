@@ -8,7 +8,7 @@
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Quadratic formula)
 ## Level(2)
-## Author(K. Andrew Parker)
+## Author(K. Andrew Parker modified by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -34,7 +34,7 @@ $showPartialCorrectAnswers = 1;
 #
 #
 
-Context("Complex")->variables->are( "x"=>Real );
+Context("Numeric");
 Context()->flags->set(
    reduceConstants => 0,
    reduceConstantFunctions => 0
@@ -42,22 +42,20 @@ Context()->flags->set(
 Parser::Number::NoDecimals;
 Context()->noreduce('(-x)+y', '(-x)-y');
 
-Context()->functions->disable('sqrt');
-Context()->{error}{msg}{"Function 'sqrt' is not allowed in this context"} =
-       "You are not allowed to use 'sqrt' in this answer. <BR> If your radical does not simplify, then you've made a mistake.";
-
-
-$alpha = non_zero_random(-9,9,1);
-$beta = non_zero_random(-9,9,1);
-
-$A = 1;
-$B = -2*$alpha;
-$C = $alpha**2 + $beta**2;
+$A = non_zero_random(-9,9,1);
+$C = non_zero_random(-9,9,1);
+do { 
+    $B = non_zero_random(-20,20,1);
+    $discriminant = Compute("($B)**2 - 4*$A*$C")->reduce;
+    } until ( $discriminant > 0 && round(sqrt($discriminant)) != sqrt($discriminant) );
 
 $quadratic = Formula("$A*x**2 + $B*x + $C")->reduce;
 
-$r1 = Complex( "$alpha + $beta*i" );
-$r2 = Complex( "$alpha - $beta*i" );
+$oppB = Compute("-$B")->reduce;
+$denom = Compute("2*$A")->reduce;
+
+$r1 = Formula( "( $oppB + sqrt( $discriminant ) ) / $denom" );
+$r2 = Formula( "( $oppB - sqrt( $discriminant ) ) / $denom" );
 $roots = List( $r1, $r2 );
 
 ##############################################################
@@ -68,11 +66,11 @@ $roots = List( $r1, $r2 );
 
 BEGIN_PGML
 
-List the roots of the quadratic polynomial: [`  [$quadratic] `]  
+List the roots of the quadratic expression: [`  [$quadratic] `]  
 
 In other words, list the solutions of the equation: [` 0 = [$quadratic] `]  
 
-[` x = `] [____________________]{$roots}
+[`  `] [____________________]{$roots}  
 
 * Your answers must be in exact form, do not give their decimal values.
 * Separate multiple roots with a comma.

@@ -1,0 +1,73 @@
+##DESCRIPTION
+##  Order of Operations
+##
+##ENDDESCRIPTION
+## DBsubject(Numbers)
+## Institution(The College of Idaho, City Tech)
+## Author(RA Cruz)
+## TitleText1('Essentials of Intermediate Algebra')
+## AuthorText1('Blitzer, Parker')
+## EditionText1('1')
+## Section1('1.2')
+## Problem1('')
+## KEYWORDS('real numbers','operations with signed numbers','order of operations')
+## Date('2/12/2016')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+
+$a = random(1,9,1);
+$b = random(1,9,1);
+$c = random(-5,-2,1);
+$d = random(2,5,1);
+$e = random(2,5,1);
+$f = random(2,5,1);
+$g = random(2,5,1);
+$h = random(2,5,1);
+
+######################################
+#  Main text
+
+BEGIN_TEXT
+Use order of operations to evaluate: \[ $a - $b($c($d-$e) - $f($g - $h)) \]
+$PAR
+Answer: \{ans_rule(15) \}
+END_TEXT
+
+######################################
+#  Answers
+
+Context("LimitedNumeric"); #Better if a reduced fraction was required
+Context()->{error}{msg}{"Can't use '+' in this context"} 
+  = "Addition is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '-' in this context"} 
+  = "Subtraction is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '*' in this context"} 
+  = "Multiplication is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '/' in this context"} 
+  = "Division is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '^' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '**' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+
+$ans = Real($a - $b*($c*($d-$e) - $f*($g - $h)));
+ANS($ans->cmp);
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

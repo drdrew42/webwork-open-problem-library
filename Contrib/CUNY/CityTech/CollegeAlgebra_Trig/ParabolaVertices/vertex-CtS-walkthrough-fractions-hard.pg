@@ -203,6 +203,8 @@ Use the _complete the square_ method to find the vertex of the following parabol
 
 _Note: There will be some extra steps because the coefficient of [` x^2 `] is *not* 1._
 
+In this problem we guide you to put the problem in the form [`y=A(x-H)^2+K`] though it may be more similar to other problems if we use the form [`\dfrac{y-K}{A}=(x-H)^2`].
+
 [` \large{ [$LHS] = [$RHS] } `]  
 
 END_PGML

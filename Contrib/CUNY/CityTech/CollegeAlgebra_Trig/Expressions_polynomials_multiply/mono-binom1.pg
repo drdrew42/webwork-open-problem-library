@@ -1,0 +1,76 @@
+###DESCRIPTION
+## This "is" the Library file '[TMPL]/Library/CollegeOfIdaho/setAlgebra_05_02_MultiplyPolynomials/52IntAlg_07_MultPoly.pg'
+## This problems asks students to multiply a monomial with a binomial. 
+##
+##ENDDESCRIPTION
+## DBsubject('Intermediate Algebra')
+## DBchapter('Ch 05: Polynomials, Polynomial Functions, and Factoring')
+## DBsection('Multiplication of Polynomials')
+## KEYWORDS('polynomials')
+## TitleText1('Essentials of Intermediate Algebra')
+## EditionText1('1')
+## AuthorText1('Blitzer')
+## Section1('5.2')
+## Problem1('')
+## Author('RA Cruz, Parker')
+## Institution('The College of Idaho, City Tech')
+## Date('2/15/2016')
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "contextLimitedPolynomial.pl",
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+
+Context()->variables->are(a=>'Real',b=>'Real');
+
+$a= random(1,7,1);
+($b1,$b0)= (random(2,5,1),non_zero_random(-3,3,1));
+
+$n1=random(2,4,1);
+$n2=random(2,4,1);
+$n3=random(2,4,1);
+
+$poly1 = Formula("$a*a*b^$n1")->reduce;
+$poly2 = Formula("$b1*a^$n2*b^$n3 + $b0*a*b")->reduce;
+
+######################################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Multiply the monomial and the polynomial:
+$BR $BR
+  \( $poly1 ( $poly2 ) \)
+$BR $BR
+Answer:  \{ ans_rule(40) \} 
+END_TEXT
+Context()->normalStrings;
+
+######################################
+#  Answer
+
+Context("LimitedPolynomial-Strict");
+Context()->variables->are(a=>'Real',b=>'Real');
+Context()->flags->set(singlePowers=>1);
+
+($c1,$c0) = ($a*$b1,$a*$b0);
+($ae1,$ae0) = ($n2+1,2);
+($be1,$be0) = ($n1+$n3,$n1+1);
+$ans = Formula("$c1*a^$ae1*b^$be1 + $c0*a^$ae0*b^$be0")->reduce;
+ANS($ans->cmp); 
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

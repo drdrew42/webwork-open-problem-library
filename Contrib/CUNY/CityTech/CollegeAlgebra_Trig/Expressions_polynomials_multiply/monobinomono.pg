@@ -1,0 +1,78 @@
+###DESCRIPTION
+## This is a variant of the Library file '[TMPL]/Library/CollegeOfIdaho/setAlgebra_05_02_MultiplyPolynomials/52IntAlg_08_MultPoly.pg'
+## This problems asks students to multiply a monomial with a binomial with a monomial.
+## 
+##ENDDESCRIPTION
+## DBsubject('Intermediate Algebra')
+## DBchapter('Ch 05: Polynomials, Polynomial Functions, and Factoring')
+## DBsection('Multiplication of Polynomials')
+## KEYWORDS('polynomials')
+## TitleText1('Essentials of Intermediate Algebra')
+## EditionText1('1')
+## AuthorText1('Blitzer')
+## Section1('5.2')
+## Problem1('')
+## Author('RA Cruz, Parker')
+## Institution('The College of Idaho, City Tech')
+## Date('2/15/2016')
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "contextLimitedPolynomial.pl",
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+
+
+#----Pick the coefficients
+$a1= random(-9,-1,1);
+($b1,$b0)= (1,random(-5,-1,1));
+$c1 = random(1,5,1);
+
+#----Pick the powers of the monomials
+$e = random(2,3,1);
+
+#----Make the polynomials
+$poly1 = Formula("$a1*x^$e")->reduce;
+$poly2 = Formula("$b1*x + $b0")->reduce;
+$poly3 = Formula("$c1*x")->reduce;
+
+######################################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Carry out the following multiplication, writing your final answer ${BITALIC}without${EITALIC} parentheses.
+$BR
+$BR
+  \( $poly1 ( $poly2 ) ( $poly3 ) \)
+$BR
+$BR
+Answer:  \{ ans_rule(40) \} 
+END_TEXT
+Context()->normalStrings;
+
+######################################
+#  Answer
+
+Context("LimitedPolynomial-Strict");
+Context()->flags->set(singlePowers=>1);
+
+($d1,$d0) = ($a1*$b1*$c1,$a1*$b0*$c1);
+($h1,$h0) = ($e+2,$e+1);
+$ans = Formula("$d1*x^$h1 + $d0*x^$h0")->reduce;
+ANS($ans->cmp); 
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

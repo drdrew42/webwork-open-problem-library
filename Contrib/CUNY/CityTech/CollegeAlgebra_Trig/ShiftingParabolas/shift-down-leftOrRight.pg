@@ -8,7 +8,7 @@
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Graphs)
 ## Level(2)
-## Author(K. Andrew Parker)
+## Author(K. Andrew Parker adapted by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -20,7 +20,8 @@ loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
    "PGgraphmacros.pl", 
-   "PGML.pl"
+   "PGML.pl", "parserImplicitEquation.pl", 
+   "PGcourse.pl"
 );
 
 # Print problem number and point value (weight) for the problem
@@ -34,7 +35,17 @@ $showPartialCorrectAnswers = 1;
 #  Setup
 #
 #
-Context("Numeric");
+Context("ImplicitEquation");
+Context()->variables->set(
+    x => { limits => [ -7, 7 ] },
+    y => { limits => [ -10,  4 ] }
+);
+
+Context()->{error}{msg}{
+"Can't find any solutions to your equation"} = ' ';
+Context()->{error}{msg}{
+"Can't generate enough valid points for comparison"} = ' ';
+
 $refreshCachedImages = 1;
 
 $shiftX = non_zero_random(-5,5,1);
@@ -57,7 +68,7 @@ add_functions($gr, "(x-$shiftX)^2+$shiftY for x in <-7,7>" .
 $gr->moveTo(0,0);
 $gr->arrowTo($shiftX,$shiftY,'red',4,'dashed');
 
-$ans = Formula("(x-$shiftX)^2+$shiftY")->reduce;
+$ans = ImplicitEquation("y = (x-$shiftX)^2+$shiftY", solutions => [[$shiftX,$shiftY],[$shiftX+1,1+$shiftY],[$shiftX-1,1+$shiftY]]);
 
 ##############################################################
 #
@@ -72,7 +83,7 @@ In the following image, the original function _(black)_ is [` y = x^2 `]
 >> [@ image( insertGraph($gr), width=>400, height=>400, tex_size=>800 ) @]* <<
 
 What is the equation of the shifted graph _(red)_?  
-[` y = `] [________________]{$ans}
+[________________]{$ans}
 
 END_PGML
 
@@ -84,7 +95,7 @@ END_PGML
 
 BEGIN_PGML_HINT
 
-This parabola has been shifted to the [$LR] by [$absShiftX] units and shifted up by [$shiftY] units from standard position.
+This parabola has been shifted to the [$LR] by [$absShiftX] units and shifted up by [$shiftY] units from standard position. [`([$shiftX],[$shiftY])`] is a solution to the desired equation.
 
 END_PGML_HINT
 BEGIN_PGML_SOLUTION
@@ -93,14 +104,17 @@ The black parabola is given by the equation [` y = x^2 `]
 
 This parabola has been shifted to the [@($shiftX>0)?"right":"left"@] by [@abs($shiftX)@] units and shifted down by [@abs($shiftY)@] units from standard position.
 
-To shift down by [@abs($shiftY)@] units, we only need to tack on "[` + [$shiftY] `]" to the end of our function.
+To shift down by [@abs($shiftY)@] units, we only need to replace [`y`] with  "[`y -( [$shiftY]) `]".
 
-To shift [@($shiftX>0)?"right":"left"@] by [@abs($shiftX)@] units, we must replace [`x`] with [`(x-[$shiftX])`] in our function.
+To shift [@($shiftX>0)?"right":"left"@] by [@abs($shiftX)@] units, we must replace [`x`] with [`(x-[$shiftX])`] in our equation.
 
-So our new equation must be [` y = (x - [$shiftX] )^2 + [$shiftY] `]
+So our new equation must be  [` y - [$shiftY]= (x - [$shiftX] )^2 `] 
+or, equivalently,
 
-**It may seem that horizontal and vertical shifts are inexplicably reversed -**  
-_But they're actually the same!_
+[` y = (x - [$shiftX] )^2 + [$shiftY] `]
+
+**If you only write the second of the two formulations above, it may seem that horizontal and vertical shifts are inexplicably reversed -**  
+_But they're actually the same as seen by the first formulation!_
 
 To shift horizontally, we replace [`x`] with [`(x+A)`] or [`(x-A)`],  
 depending on whether we want to shift left [`(x+A)`],  

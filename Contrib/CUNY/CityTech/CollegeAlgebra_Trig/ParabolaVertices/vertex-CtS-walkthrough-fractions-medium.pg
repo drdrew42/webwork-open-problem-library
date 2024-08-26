@@ -8,7 +8,7 @@
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Completing the square)
 ## Level(2)
-## Author(K. Andrew Parker)
+## Author(K. Andrew Parker with modifications by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -108,7 +108,7 @@ $ans1m = Formula("(x-$h)^2 - s")->reduce;
 $ans1 = ($K>0) ? $ans1p->substitute(s=>$K) : $ans1m->substitute(s=>$absK);
 
 $ans2 = Formula("$A(x-$h)^2 + $k")->reduce;
-
+#$RHS22 = Formula("(x-$h)^2")->reduce;
 Context("Point");
 
 $vertex = Point("($h,$k)");
@@ -123,7 +123,7 @@ BEGIN_PGML
 
 Use the _complete the square_ method to find the vertex of the following parabola:
 
-_Note: There will be some extra steps because the coefficient of [` x^2 `] is *not* 1._
+_Note: There will be some extra steps because the coefficient of [` x^2 `] is *not* 1._ In this problem we guide you to use the form [`y=A(x-H)^2+K`] though you may do the problem using the form [`\dfrac{y-K}{A}=(x-H)^2`].
 
 [` \large{ [$LHS] = [$RHS] } `]  
 
@@ -172,7 +172,7 @@ Add [$CtS] to both sides to complete the perfect square trinomial.
 
 END_PGML
 Section::End();
-Section::Begin("Step 5: Factor and start solving for \(y\)");
+Section::Begin("Step 5: Factor (and start solving for \(y\), if desired)");
 BEGIN_PGML
 
 [` \large{ [$LHS2] = [$RHS2] } `]
@@ -193,7 +193,7 @@ Finish solving for y.
 >> [` \large{ y = } `] [____________]{$ans2->cmp(checker=>$factorCheck)} <<
 
 * Standard Form for a parabola is: [` y = A(x-H)^2 + K `]
-
+* If you did not solve for [`y`], use the form [`\dfrac{y-K}{A}=(x-H)^2`] instead (more similar to the previous problems).
 END_PGML
 Section::End();
 Section::Begin("Step 7: Identify the vertex");

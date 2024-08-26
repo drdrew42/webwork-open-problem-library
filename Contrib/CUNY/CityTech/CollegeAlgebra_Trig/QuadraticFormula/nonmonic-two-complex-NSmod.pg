@@ -8,7 +8,7 @@
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Quadratic formula)
 ## Level(2)
-## Author(K. Andrew Parker)
+## Author(K. Andrew Parker adapted by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -41,23 +41,23 @@ Context()->flags->set(
 );
 Parser::Number::NoDecimals;
 Context()->noreduce('(-x)+y', '(-x)-y');
+Context()->functions->undefine('sqrt');
 
-Context()->functions->disable('sqrt');
 Context()->{error}{msg}{"Function 'sqrt' is not allowed in this context"} =
        "You are not allowed to use 'sqrt' in this answer. <BR> If your radical does not simplify, then you've made a mistake.";
 
+$denom = list_random( 2, 3, 5 );
+do { $alpha = non_zero_random(-9,9,1); } until ( $alpha % $denom != 0 );
+do { $beta = non_zero_random(-9,9,1); } until ( $beta % $denom != 0 );
 
-$alpha = non_zero_random(-9,9,1);
-$beta = non_zero_random(-9,9,1);
-
-$A = 1;
-$B = -2*$alpha;
+$A = $denom**2;
+$B = -2*$alpha*$denom;
 $C = $alpha**2 + $beta**2;
 
 $quadratic = Formula("$A*x**2 + $B*x + $C")->reduce;
 
-$r1 = Complex( "$alpha + $beta*i" );
-$r2 = Complex( "$alpha - $beta*i" );
+$r1 = Compute( "$alpha/$denom + ($beta/$denom)*i" );
+$r2 = Compute( "$alpha/$denom - ($beta/$denom)*i" );
 $roots = List( $r1, $r2 );
 
 ##############################################################

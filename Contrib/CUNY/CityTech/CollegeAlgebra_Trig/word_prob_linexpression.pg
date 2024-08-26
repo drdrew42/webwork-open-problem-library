@@ -1,0 +1,65 @@
+##DESCRIPTION
+##  REVIEW: Order of Operations
+##
+##ENDDESCRIPTION
+## DBsubject(Algebra)
+## DBchapter(Algebra of real numbers and simplifying expressions)
+## DBsection(Simplifying expressions)
+## Institution(NYCCT)
+## Author(Holly Carley)
+## KEYWORDS('real numbers','operations with signed numbers','order of operations')
+## Date: 2007/09
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "Parser.pl",
+  "MathObjects.pl",
+  "contextLimitedPolynomial.pl",
+  "PGcourse.pl"
+);
+
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+#  Note: Most of this is to get different denominators
+#        and reduces fractions.
+
+$a1 = random(5,12,1);         # Part a: 
+$a2 = random(2,3,1);
+$a3 = non_zero_random(-4,4,1);
+$a4 = random(3,5,1);
+$a5 = random(6,9,1);
+
+######################################
+#  Main text
+
+BEGIN_TEXT
+Find an expression that represents a rectangle where \(x\) is the width in feet and the length is \($a1\) feet more than the width.  Simplify your answer
+$PAR
+The perimeter is  \{ ans_rule(20) \} feet.
+
+END_TEXT
+
+######################################
+#  Answers
+
+
+
+$ans = Formula("(4)*x +(2*$a1)")->reduce;
+Context()->flags->set(singlePowers=>1);
+Context("LimitedPolynomial-Strict"); 
+
+ANS($ans->cmp);
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+;
+ENDDOCUMENT();

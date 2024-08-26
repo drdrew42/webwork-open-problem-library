@@ -1,0 +1,56 @@
+#DESCRIPTION
+##Type of
+#ENDDESCRIPTION
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"contextFraction.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+$whole=random(1,3,1);
+$remain=random(1,3,2);
+$cups = 4*$whole+$remain;
+
+Context("LimitedProperFraction")->flags->set(
+allowMixedNumbers=>1,
+requireProperFractions=>1);
+
+Context()->{error}{msg}{"The numerator must be less than the denominator in a proper fraction"} 
+  = "You must give your answer as a mixed fraction. $BR Use a single space between the whole number and the fractional parts.";
+
+$ans = Fraction($cups,4);
+
+BEGIN_TEXT
+$PAR
+OPTIONAL
+$PAR
+Nick uses \(\frac{1}{4}\) cup of vinegar for every 1 cup of olive oil when making salad dressing.$BR
+How many cups of vinegar will Nick need if he uses $cups cups of olive oil in his salad dressing? $BR
+\{ ans_rule(10) \}
+$BR
+You must give your answer as a mixed fraction.
+
+END_TEXT
+ANS($ans->cmp());
+BEGIN_SOLUTION
+$PAR Solution $PAR
+He needs \($cups \times \frac{1}{4} = \frac{$cups}{4} \) cups.
+$PAR
+Then convert the improper fraction to mixed fraction form: \( $whole \frac{$remain}{4} \)
+END_SOLUTION
+
+COMMENT('MathObject version');
+ENDDOCUMENT();
+
+
+## DBsubject(Arithmetic)
+## DBchapter(Fractions/rational numbers)
+## DBsection(Ratio/proportions)
+

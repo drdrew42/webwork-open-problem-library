@@ -1,0 +1,58 @@
+## DBsubject(Algebra)
+## DBchapter(Properties of exponents, rational exponents and radicals)
+## DBsection(Properties of exponents)
+## Level(3)
+## Static(1)
+## MO(1)
+DOCUMENT(); 
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextFraction.pl"
+);
+
+TEXT(beginproblem());
+
+##############################################
+#  Setup
+
+Context("Fraction-NoDecimals");
+
+
+##############################################
+#  Main text
+
+$a=random(2,4,2);
+$b=random(3,5,2);
+$c=random(7,9,1);
+$ans=Fraction($a**2/$b**2-1/$c+1)->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+
+Evaluate: \( \displaystyle \left( \frac{ $b }{ $a } \right)^{-2}-$c^{-1}+$b^0 = \)
+\{ans_rule(20)\}
+
+$BR
+$BR
+$HR
+Note: Your answer should be completely simplified.
+Unsimplified answers will not be accepted.
+
+END_TEXT
+Context()->normalStrings;
+
+##################################################
+#  Answer evaluation
+
+$showPartialCorrectAnswers = 0;
+
+Context()->operators->undefine("+","*","**","^");
+Context()->functions->disable("All");
+
+ANS($ans->cmp());
+
+
+;
+ENDDOCUMENT();

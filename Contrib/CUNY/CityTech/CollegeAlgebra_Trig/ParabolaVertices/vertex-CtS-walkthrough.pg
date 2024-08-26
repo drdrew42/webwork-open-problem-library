@@ -8,7 +8,7 @@
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Completing the square)
 ## Level(2)
-## Author(K. Andrew Parker)
+## Author(K. Andrew Parker adapted by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -73,7 +73,8 @@ $factorCheck = sub {
   };
 
 
-$ans = Formula("(x-$h)^2+$k")->reduce;
+#$ans = Formula("(x-$h)^2+$k")->reduce;
+$ans = Formula("(x-$h)^2")->reduce;
 
 Context("Point");
 
@@ -122,31 +123,33 @@ Add [$CtS] to both sides to complete the perfect square trinomial.
 
 END_PGML
 Section::End();
-Section::Begin("Step 4: Factor and solve for y");
+Section::Begin("Step 4: Factor");
 BEGIN_PGML
 
 >> [` \large{ [$LHS2] = [$RHS2] } `] <<
 
-Factor the perfect square trinomial, and solve for _y_.
+Factor the perfect square trinomial.
 
->> [` \large y = `] [____________]{$ans->cmp(checker=>$factorCheck)} <<
+>> [`\large{ [$LHS2]} = `] [____________]{$ans->cmp(checker=>$factorCheck)} <<
 
 END_PGML
 Section::End();
 Section::Begin("Step 5: Identify the vertex");
 BEGIN_PGML
 
->> [` \large{ y = [$ans] } `] <<
+>> [` \large{ [$LHS2] = [$ans] } `] <<
 
 Try to determine the vertex just by thinking about how the graph of this equation is a shifted version of [` y = x^2 `]. 
     The vertex of [` y = x^2 `] is [` (0,0) `], what would the new vertex be after applying the shifts?
 
-Otherwise, identify the values of _h_ and _k_ in our equation by comparing our equation to the form [` y = (x-h)^2 + k `]. 
+Otherwise, identify the values of _h_ and _k_ in our equation by comparing our equation to the form 
+[` y - k = (x-h)^2`] or, equivalently, 
+[` y = (x-h)^2 + k `]. 
     (_Remember that expressions like [` x+1 `] can be re-written as [` x - (-1) `] and expressions like [` x - 1 `] can be re-written as [` x + (-1) `]_)
 
 The vertex of our parabola will be [` (h,k) `].
 
-What is the vertex of [` y = [$ans] `]? [__________]{$vertex}
+What is the vertex of [` [$LHS2] = [$ans] `]? [__________]{$vertex}
 
 END_PGML
 Section::End();
@@ -168,17 +171,12 @@ For _Step 3_, the square was completed on the right side of the equation.
     Look at how the right side of the equation was changed,  
     do the same on the left side of the equation to keep it balanced.
 
-For _Step 4_, do _NOT_ just isolate [`y`].  
-    **Factor the perfect square _first_.**  
-    Remember that [` x^2 + 2Ax + A^2 = (x + A)^2 `]  
-    _Then_ you can solve for [`y`].
+For _Step 4_, factor the perfect square.
+    Remember that [` x^2 + 2Ax + A^2 = (x + A)^2 `]  .
 
-For _Step 5_, now that you have the equation in vertex form,  
+For _Step 5_, now that you have the equation in a form where the vertex can be easily determined,   
     you should be able to determine the value of [`h`] and [`k`].
 
-You might need to rewrite your additions or subtractions to match vertex form.
-
-[` y = ( x - h )^2 + k `]
 
 END_PGML_HINT
 BEGIN_PGML_SOLUTION
@@ -201,15 +199,12 @@ For _Step 4_, we factor the left side first:
     [` [$LHS2] = [$RHS2] `]  
     [` [$LHS2] = (x-[$h])^2 `]  
 
-Then we solve for y:  
-    [` [$LHS2] = (x-[$h])^2 `]  
-    [` y = [$ans] `]  
+
 
 For _Step 5_, identify [`h`] and [`k`]:  
-    [` y = [$ans] `]  
-    [`\displaystyle y = \left( x - ([$h]) \right)^2 + ([$k]) `]  
+  
 
-So [` h = [$h] `] and [` k = [$k] `].
+ [` h = [$h] `] and [` k = [$k] `].
 
 Our vertex is [`([$h],[$k])`].
 END_PGML_SOLUTION

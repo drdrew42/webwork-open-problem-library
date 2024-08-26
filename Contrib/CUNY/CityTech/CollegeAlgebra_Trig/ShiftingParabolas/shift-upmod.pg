@@ -2,13 +2,13 @@
 ##  Algebra problem: find equation of shifted parabola
 ##ENDDESCRIPTION
 
-##KEYWORDS('algebra', 'quadratic function', 'parabola', 'translation of graphs', 'function graph', 'graph')
+##KEYWORDS('algebra', 'quadratic function', 'parabola', 'quadratic formula', 'translation of graphs', 'function graph', 'graph')
 
 ## DBsubject(Algebra)
 ## DBchapter(Quadratic equations and functions)
 ## DBsection(Graphs)
 ## Level(2)
-## Author(K. Andrew Parker adapted by Holly Carley)
+## Author(K. Andrew Parker modified by Holly Carley)
 ## Institution(CUNY City Tech)
 ## Language(en)
 
@@ -21,7 +21,7 @@ loadMacros(
    "MathObjects.pl",
    "PGgraphmacros.pl", 
    "PGML.pl",
-   "parserImplicitEquation.pl",
+   "parserImplicitEquation.pl", 
    "PGcourse.pl"
 );
 
@@ -38,8 +38,8 @@ $showPartialCorrectAnswers = 1;
 #
 Context("ImplicitEquation");
 Context()->variables->set(
-    x => { limits => [ -6, 6 ] },
-    y => { limits => [ -9,  3 ] }
+    x => { limits => [ -4, 4 ] },
+    y => { limits => [ -4,  9 ] }
 );
 
 Context()->{error}{msg}{
@@ -49,12 +49,11 @@ Context()->{error}{msg}{
 
 #Context("Numeric");
 $refreshCachedImages = 1;
-$shift = -1* random(1,8,1);
-$absShift = -1*$shift;
+$shift = random(1,5,1);
 
-$gr = init_graph(-6,-9,6,3,
+$gr = init_graph(-4,-1,4,7,
 axes=>[0,0],
-grid=>[12,12],
+grid=>[8,8],
 size=>[400,400]
 );
 $gr->gifName($gr->gifName()."-$newProblemSeed");
@@ -69,7 +68,11 @@ $gr->moveTo(0,0);
 $gr->arrowTo(0,$shift,'red',4,'dashed');
 
 
-$ans = ImplicitEquation("y = x^2 + $shift", answers => [[0,$shift],[-1,1+$shift],[1,1+$shift]]);
+$check1 = $shift+1;
+$ans = ImplicitEquation("y = x^2+$shift", solutions => [[0,$shift], [-1,$check1],[1,$check1]]);
+
+
+# $ans = Formula("x^2 + $shift")->reduce;
 
 ##############################################################
 #
@@ -84,7 +87,7 @@ In the following image, the original function _(black)_ is [` y = x^2 `]
 >> [@ image( insertGraph($gr), width=>400, height=>400, tex_size=>800 ) @]* <<
 
 What is the equation of the shifted graph _(red)_?  
-[________________]{$ans}
+ [________________]{$ans}
 
 END_PGML
 
@@ -96,17 +99,16 @@ END_PGML
 
 BEGIN_PGML_HINT
 
-This parabola has been shifted down [$absShift] units from standard position. [`(0,[$shift])`] is a solution to the desired equation.
+This parabola has been shifted up [$shift] units from standard position. [`(0,[$shift])`] is a solution to the desired equation.
 
 END_PGML_HINT
 BEGIN_PGML_SOLUTION
 
 The black parabola is given by the equation [` y = x^2 `]
 
-After the shift, we find the red parabola with y-coordinates that have been decreased by [$absShift] from their original positions.
+After the shift, we find the red parabola with y-coordinates that have been increased by [$shift] from their original positions.
 
-Thus, our new equation is [` y - [$shift]=x^2 `], or, equivalently,
-[` y = x^2 + [$shift] `]
+Thus, our new equation is [` y -[$shift] = x^2`] or, equivalently, [`y=x^2+[$shift]`].
 
 END_PGML_SOLUTION
 

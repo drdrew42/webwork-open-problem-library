@@ -1,0 +1,84 @@
+##DESCRIPTION
+##  REVIEW: Order of Operations
+##
+##ENDDESCRIPTION
+## DBsubject(Numbers)
+## Institution(The College of Idaho, City Tech)
+## Author(RA Cruz)
+## TitleText1('Essentials of Intermediate Algebra')
+## AuthorText1('Blitzer, Parker')
+## EditionText1('1')
+## Section1('1.2')
+## Problem1('')
+## KEYWORDS('real numbers','operations with signed numbers','order of operations')
+## Date('2/12/2016')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGauxiliaryFunctions.pl",
+  "MathObjects.pl"
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+#  Note: Most of this is to get different denominators
+#        and reduces fractions.
+
+$a1 = random(5,15,1);         # Part a: 
+$a2 = random(5,15,1);
+$a3 = random(5,15,1);
+$a4 = random(3,9,1);
+$a5 = random(3,9,1);
+$a6 = random(3,12,1);
+
+$b1 = random(2,5,1);         # Part B: 
+$b2 = random(2,4,1);
+$b3 = random(2,3,1);
+$b4 = random(2,3,1);
+$b5 = random(1,4,1);
+
+######################################
+#  Main text
+
+BEGIN_TEXT
+REVIEW: Use the order of operations to evaluate:
+$PAR
+a) \( [$a1 - ($a2 - $a3)]- [$a4 - ($a5-$a6)] = \) \{ ans_rule(10) \} 
+$PAR
+b) \( $b1 \cdot $b2 - $b3 + $b4 \cdot $b5= \) \{ ans_rule(10) \} 
+$BR
+END_TEXT
+
+######################################
+#  Answers
+
+$showPartialCorrectAnswers = 1;
+
+Context("LimitedNumeric");
+Context()->{error}{msg}{"Can't use '+' in this context"} 
+  = "Addition is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '-' in this context"} 
+  = "Subtraction is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '*' in this context"} 
+  = "Multiplication is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '/' in this context"} 
+  = "Division is disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '^' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+Context()->{error}{msg}{"Can't use '**' in this context"} 
+  = "Exponents are disabled for this problem. Compute the result for yourself and resubmit your answer.";
+
+$ans_a = Compute(($a1 - ($a2 - $a3))- ($a4 - ($a5-$a6)));
+ANS($ans_a->cmp);
+
+$ans_b = Compute($b1 * $b2 - $b3 + $b4 * $b5);
+ANS($ans_b->cmp);
+
+######################################
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

@@ -1,0 +1,70 @@
+##DESCRIPTION
+##  Algebra problem: multiply out product of two polynomials
+##ENDDESCRIPTION
+## DBsubject('Algebra')
+## DBchapter('Basic Algebra')
+## DBsection('Algebraic Expressions')
+## Date('2/15/2016')
+## Institution('Univeristy of Utah, City Tech')
+## Author('Utah ww group, Parker')
+## TitleText1('Intermediate Algebra')
+## AuthorText1('Ron Larson and Robert P. Hostetler')
+## EditionText1('4')
+## Section1('Linear Equations and Inequalities')
+## Problem1('')
+## TitleText2('College Algebra')
+## AuthorText2('Stewart, Redlin, Watson')
+## EditionText2('3')
+## Section2('1.4')
+## Problem2('19')
+## KEYWORDS('algebra')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"contextLimitedPolynomial.pl"
+);
+
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+
+$a = random(2,7,1)*random(-1,1,2);
+$b = random(2,7,1)*random(-1,1,2);
+$c = random(2,7,1)*random(-1,1,2);
+$d = random(2,7,1);
+$e = random(2,7,1);
+
+$bi = Formula("$d x+$a")->reduce->TeX;
+$tri = Formula("$e x^2+$b x+$c")->reduce->TeX;
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Multiply: \(( $bi )( $tri )\)
+$PAR
+Answer:\{ans_rule(30) \}
+
+END_TEXT
+Context()->normalStrings;
+
+$coef1 = $d*$e;
+$coef2 =  $d*$b+$a*$e;
+$coef3 =  $d*$c+$a*$b;
+$coef4 =  $a*$c;
+
+Context("LimitedPolynomial-Strict");
+Context()->flags->set(singlePowers=>1);
+
+$ans=Formula("$coef1 x^3 + $coef2 x^2 + $coef3 x + $coef4")->reduce;
+ANS($ans->cmp);
+
+$showPartialCorrectAnswers=1;
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,66 @@
+## DBsubject(Algebra)
+## DBchapter(Properties of exponents, rational exponents and radicals)
+## DBsection(Properties of exponents)
+## Level(3)
+## Static(1)
+## MO(1)
+DOCUMENT(); 
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextFraction.pl",
+  "contextLimitedPowers.pl"
+);
+
+TEXT(beginproblem());
+
+##############################################
+#  Setup
+
+#Context("Fraction-NoDecimals");
+Context("LimitedFraction");
+LimitedPowers::OnlyPositiveIntegers();
+
+##############################################
+#  Main text
+
+$a=random(2,4,2);
+$b=random(3,5,2);
+$c=$b**2;
+$d=random(2,5,1);
+$e=random(2,5,1);
+$ans=Fraction(($a**(2*$a+2*$e)*$c**(2*$d))/(
+$b**(4*$d)))->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+
+Evaluate: \( \displaystyle \left( \frac{ $b^{$d} $a^{-$a} } { $b^{-$d}$a^$e$c^$d}\right)^{-2} = \)
+\{ans_rule(20)\}
+
+$BR
+$BR
+$HR
+Note: Your answer should be completely reduced.
+Unsimplified answers will not be accepted.  You should use positive integer exponents in your answer where appropriate.
+
+END_TEXT
+Context()->normalStrings;
+
+##################################################
+#  Answer evaluation
+
+$showPartialCorrectAnswers = 0;
+
+Context()->operators->undefine("+");
+Context()->functions->disable("All");
+ANS($ans->cmp(studentsMustReduceFractions=>1, showFractionReductionWarnings=>0)->withPostFilter(sub { 
+  my $ans = shift; 
+  $ans->{ans_message} = "Rewrite your answer using only positive exponents." 
+    if $ans->{ans_message} eq "Powers must be positive integer constants";
+  return $ans; 
+}));
+
+;
+ENDDOCUMENT();
